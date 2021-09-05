@@ -1,0 +1,47 @@
+
+name: randomusers
+description: A new Flutter project.
+
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.12.0 <3.0.0"
+
+dependencies:
+
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.2
+  flutter_bloc: ^7.2.0
+  hive: ^2.0.4
+  hive_flutter: ^1.1.0
+  logger: ^1.1.0
+  http: ^0.13.3
+  shared_preferences: ^2.0.7
+
+
+
+dev_dependencies:
+  hive_generator: ^1.1.0
+  build_runner: ^2.1.2
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+
+assets:
+  - images/man.png
+  - images/women.png
+
+#//add cupertino_icons: ^1.0.2
+#  flutter_bloc: ^7.2.0
+#  hive: ^2.0.4
+#  hive_flutter: ^1.1.0
+#  logger: ^1.1.0
+#  http: ^0.13.3
+#  shared_preferences: ^2.0.7
