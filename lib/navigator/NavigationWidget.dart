@@ -6,7 +6,8 @@ import 'package:randomusers/navigator/NavigationState.dart';
 import 'package:randomusers/user/details/UserDetails.dart';
 import 'package:randomusers/user/list/UserList.dart';
 
-class NavigationWidget extends StatelessWidget {
+
+class NavigationWidget extends StatelessWidget  {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<NavigationBloc, NavigationState>(
@@ -18,6 +19,7 @@ class NavigationWidget extends StatelessWidget {
             return UserList();
           case NavigationState.userDetails:
             return UsersDetails();
+
         }
       },
     );
