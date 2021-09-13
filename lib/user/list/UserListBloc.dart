@@ -22,27 +22,25 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
 
   @override
   Stream<UserListState> mapEventToState(UserListEvent event) async* {
-    switch (event) {
-      case UserListEvent.initialized:
+    if (event is InitializedUserListEvent) {
+      yield state.copy(
+        username: await repository.username(),
+        isLoading: true,
+      );
+
+      if (state.users.isEmpty) {
         yield state.copy(
-          username: await repository.username(),
-          isLoading: true,
+          isLoading: false,
+          users: await repository.loadUsersList(),
         );
-
-        if (state.users.isEmpty) {
-          yield state.copy(
-            isLoading: false,
-            users: await repository.loadUsersList(),
-          );
-        }
-
-        break;
-      case UserListEvent.logout:
-        yield state.copy(isLoading: true);
-        repository.logout();
-        yield _initialState;
-        navigation.add(NavigationEvent.authorization);
-        break;
+      }
+    } else if (event is LogoutUserListEvent) {
+      yield state.copy(isLoading: true);
+      repository.logout();
+      yield _initialState;
+      navigation.add(AuthNavigationEvent());
+    } else if (event is DetailsRequestedUserListEvent) {
+      navigation.add(UserDetailsNavigationEvent(event.user));
     }
   }
 }

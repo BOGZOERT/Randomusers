@@ -8,10 +8,6 @@ import 'package:randomusers/navigator/NavigationEvent.dart';
 import 'package:randomusers/storage/settings.dart';
 import 'package:randomusers/storage/storage.dart';
 
-
-
-
-
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final NavigationBloc navigation;
   final AuthValidator _validator = SimpleAuthValidator();
@@ -36,7 +32,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       if (await _repository.isAuthorized() && username != null) {
         await _repository.login(username);
         yield _initialState;
-        navigation.add(NavigationEvent.usersList);
+        navigation.add(UserListNavigationEvent());
       } else {
         yield state.copy(allowEditing: true);
       }
@@ -53,7 +49,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await _repository.login(username);
         yield _initialState;
 
-        navigation.add(NavigationEvent.usersList);
+        navigation.add(UserListNavigationEvent());
       }
     }
   }

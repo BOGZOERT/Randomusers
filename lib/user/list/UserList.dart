@@ -17,13 +17,16 @@ class UserList extends StatelessWidget {
             title: Text(state.username ?? "ERROR"),
             centerTitle: true,
             leading: GestureDetector(
-              onTap: () => userListBloc(context).add(UserListEvent.logout),
+              onTap: () => userListBloc(context).add(LogoutUserListEvent()),
               child: Icon(Icons.logout),
             ),
           ),
           body: ListView.builder(
             itemBuilder: (context, index) {
-              return UserListItem(user: state.users[index]);
+              return UserListItem(
+                user: state.users[index],
+                bloc: userListBloc(context),
+              );
             },
             itemCount: state.users.length,
           ),
@@ -35,6 +38,6 @@ class UserList extends StatelessWidget {
   UserListBloc userListBloc(BuildContext context) => context.read();
 
   Future<void> onLoaded(UserListBloc bloc) async {
-    bloc.add(UserListEvent.initialized);
+    bloc.add(InitializedUserListEvent());
   }
 }
