@@ -21,7 +21,7 @@ class UserList extends StatelessWidget {
                   actions: <Widget>[
                     Center(
                         child: Text(
-                          ("${state.username}  "),
+                      ("${state.username}  "),
                     ))
                   ],
                   title: TextField(
@@ -71,7 +71,6 @@ class UserList extends StatelessWidget {
   Future<void> onRefresh(UserListBloc bloc) async {
     bloc.add(RefreshEvent());
   }
-
 
   void onSearchQueryChanged(String? query, UserListBloc bloc) {
     bloc.add(SearchQueryChanged(query));
