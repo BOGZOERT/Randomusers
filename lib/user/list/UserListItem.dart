@@ -1,24 +1,30 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:randomusers/storage/entity/UserSM.dart';
-import 'package:randomusers/user/details/UserDetails.dart';
+import 'package:randomusers/user/list/UserListBloc.dart';
+
+import 'UserListEvent.dart';
 
 class UserListItem extends StatelessWidget {
   final UserSM user;
-  UserListItem({required this.user}) : super();
+  final UserListBloc bloc;
 
+  UserListItem({
+    required this.user,
+    required this.bloc,
+  }) : super();
 
   @override
-  Widget build(BuildContext context,) {
-
+  Widget build(
+    BuildContext context,
+  ) {
     return InkWell(
-
       child: Column(
-
         children: [
           CircleAvatar(
             radius: 60,
-            foregroundImage: NetworkImage(user.pictureLarge ?? "Error loading image" ),
+            foregroundImage:
+                NetworkImage(user.pictureLarge ?? "Error loading image"),
             backgroundColor: Color(0xff363030),
           ),
           Text(
@@ -30,17 +36,15 @@ class UserListItem extends StatelessWidget {
           ),
           Text(user.email ?? "No email"),
         ],
-
       ),
-      onTap: (){
-        Navigator.push(
-          context,
-          new MaterialPageRoute(
-             builder: (context) => UsersDetails(),
-          ),
-        );
-
-
+      onTap: () {
+        bloc.add(DetailsRequestedUserListEvent(user));
+        // Navigator.push(
+        //   context,
+        //   new MaterialPageRoute(
+        //     builder: (context) => UsersDetails(user),
+        //   ),
+        // );
       },
     );
   }

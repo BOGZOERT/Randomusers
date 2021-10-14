@@ -4,21 +4,16 @@ import 'NavigationEvent.dart';
 import 'NavigationState.dart';
 
 class NavigationBloc extends Bloc<NavigationEvent, NavigationState> {
-
-  NavigationBloc() : super(NavigationState.authorization);
+  NavigationBloc() : super(AuthNavigationState());
 
   @override
   Stream<NavigationState> mapEventToState(NavigationEvent event) async* {
-    switch (event) {
-      case NavigationEvent.authorization:
-        yield NavigationState.authorization;
-        break;
-      case NavigationEvent.usersList:
-        yield NavigationState.usersList;
-        break;
-      case NavigationEvent.userDetails:
-        yield NavigationState.userDetails;
-        break;
+    if (event is AuthNavigationEvent) {
+      yield AuthNavigationState();
+    } else if (event is UserListNavigationEvent) {
+      yield UserListNavigationState();
+    } else if (event is UserDetailsNavigationEvent) {
+      yield UserDetailsNavigationState(event.user);
     }
   }
 }
