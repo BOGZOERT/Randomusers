@@ -4,10 +4,12 @@ import 'package:randomusers/navigator/NavigationEvent.dart';
 import 'package:randomusers/user/list/UserListEvent.dart';
 import 'package:randomusers/user/list/UserListRepository.dart';
 import 'package:randomusers/user/list/UserListState.dart';
+import 'package:randomusers/storage/entity/UserSM.dart';
 
 class UserListBloc extends Bloc<UserListEvent, UserListState> {
   final NavigationBloc navigation;
   final UserListRepository repository;
+  List<UserSM> _usersList = [];
 
   UserListBloc({
     required this.repository,
@@ -28,10 +30,11 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
         isLoading: true,
       );
 
-      if (state.users.isEmpty) {
+      if (_usersList.isEmpty) {
+        _usersList = await repository.loadUsersList();
         yield state.copy(
           isLoading: false,
-          users: await repository.loadUsersList(),
+          users: _usersList,
         );
       }
     } else if (event is LogoutUserListEvent) {
@@ -42,5 +45,36 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
     } else if (event is DetailsRequestedUserListEvent) {
       navigation.add(UserDetailsNavigationEvent(event.user));
     }
+
+    else if (event is SearchQueryChanged) {
+      print("Search query: ${event.query}");
+      List<UserSM> results = [];
+      var query = event.query?.toLowerCase();
+      if (query == null) {
+        yield state.copy(users: _usersList);
+      }
+      else {
+        for (var user in _usersList) {
+          var name = "${user.firstName} ${user.lastName}".toLowerCase();
+
+          if (name.contains(query)) {
+            results.add(user);
+          }
+        }
+
+        print("Search results count ${results.length}");
+        yield state.copy(users: results);
+      }
+    }
+
+    else if (event is RefreshEvent )
+      {
+        _usersList.clear();
+        _usersList = await repository.loadUsersList();
+        yield state.copy(
+          isLoading: false,
+          users: _usersList,
+        );
+      }
   }
 }

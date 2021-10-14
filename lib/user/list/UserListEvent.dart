@@ -11,3 +11,13 @@ class DetailsRequestedUserListEvent extends UserListEvent {
 
   DetailsRequestedUserListEvent(this.user);
 }
+
+class SearchQueryChanged extends UserListEvent {
+  final String? query;
+
+  SearchQueryChanged(this.query);
+}
+
+class RefreshEvent extends UserListEvent {
+
+}
