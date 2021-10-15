@@ -58,7 +58,7 @@ class UserListBloc extends Bloc<UserListEvent, UserListState> {
           var name = "${user.firstName} ${user.lastName}".toLowerCase();
 
           if (name.contains(query)) {
-            results.add(user);ё
+            results.add(user);
           }
         }
 
