@@ -39,12 +39,6 @@ class UserListItem extends StatelessWidget {
       ),
       onTap: () {
         bloc.add(DetailsRequestedUserListEvent(user));
-        // Navigator.push(
-        //   context,
-        //   new MaterialPageRoute(
-        //     builder: (context) => UsersDetails(user),
-        //   ),
-        // );
       },
     );
   }

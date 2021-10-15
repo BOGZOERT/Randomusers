@@ -12,14 +12,11 @@ void main() async {
   runApp(App());
 }
 
-/// A [StatelessWidget] which uses:
-/// * [bloc](https://pub.dev/packages/bloc)
-/// * [flutter_bloc](https://pub.dev/packages/flutter_bloc)
-/// to manage the state of a counter.
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: MultiBlocProvider(
         providers: [
           BlocProvider<NavigationBloc>(
